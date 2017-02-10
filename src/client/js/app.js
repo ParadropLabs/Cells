@@ -1,3 +1,5 @@
+var $ = require('jquery');
+
 var io = require('socket.io-client');
 var ChatClient = require('./chat-client');
 var Canvas = require('./canvas');
