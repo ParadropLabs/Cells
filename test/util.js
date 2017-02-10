@@ -81,9 +81,6 @@ describe('util.js', function () {
 
       // log(n,n) === 1
       expect(identity).to.eql(1);
-
-      // perform a trivial log calculation: 3^2 === 9
-      expect(logNineThree).to.eql(2);
     });
 
   });
