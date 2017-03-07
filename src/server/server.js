@@ -32,6 +32,8 @@ var C = SAT.Circle;
 
 var initMassLog = util.log(c.defaultPlayerMass, c.slowBase);
 
+var bot = require('./bot');
+
 app.use(express.static(__dirname + '/../client'));
 
 function addFood(toAdd) {
