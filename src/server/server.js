@@ -49,7 +49,7 @@ pool.connect(function(err){
 
 var initMassLog = util.log(c.defaultPlayerMass, c.slowBase);
 
-var bot = require('./bot');
+//var bot = require('./bot');
 
 app.use(express.static(__dirname + '/../client'));
 
