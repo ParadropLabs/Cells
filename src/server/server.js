@@ -6,6 +6,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var SAT = require('sat');
+var sql = require ("mysql");
 
 // Import game settings.
 var c = require('../../config.json');
@@ -15,6 +16,9 @@ var util = require('./lib/util');
 
 // Import quadtree.
 var quadtree = require('simple-quadtree');
+
+//call sqlinfo
+var s = c.sqlinfo;
 
 var tree = quadtree(0, 0, c.gameWidth, c.gameHeight);
 
@@ -29,6 +33,19 @@ var leaderboardChanged = false;
 
 var V = SAT.Vector;
 var C = SAT.Circle;
+
+var pool = sql.createConnection({
+	host: s.host,
+	user: s.user,
+	database: s.database
+});
+
+//log sql errors
+pool.connect(function(err){
+	if (err){
+		console.log (err);
+	}
+});
 
 var initMassLog = util.log(c.defaultPlayerMass, c.slowBase);
 
@@ -342,9 +359,11 @@ io.on('connection', function (socket) {
             socket.broadcast.emit('serverMSG', currentPlayer.name + ' just logged in as admin!');
             currentPlayer.admin = true;
         } else {
-            console.log('[ADMIN] ' + currentPlayer.name + ' attempted to log in with incorrect password.');
-            socket.emit('serverMSG', 'Password incorrect, attempt logged.');
+            
             // TODO: Actually log incorrect passwords.
+              console.log('[ADMIN] ' + currentPlayer.name + ' attempted to log in with incorrect password.');
+              socket.emit('serverMSG', 'Password incorrect, attempt logged.');
+             pool.query('INSERT INTO logging SET name=' + currentPlayer.name + ', reason="Invalid login attempt as admin"');
         }
     });
 
@@ -720,7 +739,7 @@ setInterval(gameloop, 1000);
 setInterval(sendUpdates, 1000 / c.networkUpdateFactor);
 
 // Don't touch, IP configurations.
-var ipaddress = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || '0.0.0.0';
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || process.env.IP || c.host;
 var serverport = process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || c.port;
 http.listen( serverport, ipaddress, function() {
     console.log('[DEBUG] Listening on ' + ipaddress + ':' + serverport);
