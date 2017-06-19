@@ -29,9 +29,15 @@ function startGame(type) {
     document.getElementById('startMenuWrapper').style.maxHeight = '0px';
     document.getElementById('gameAreaWrapper').style.opacity = 1;
     if (type === 'player') {
+      // Hide the connect instructions box.
       var gameAreaWrapper = document.getElementById('gameAreaWrapper');
       var connectInstructions = document.getElementById('connectInstructions');
       gameAreaWrapper.removeChild(connectInstructions);
+    } else if (type === 'spectate') {
+      // Hide the feed/split buttons.
+      var gameAreaWrapper = document.getElementById('gameAreaWrapper');
+      var mobile = document.getElementById('mobile');
+      gameAreaWrapper.removeChild(mobile);
     }
     if (!socket) {
         socket = io({query:"type=" + type});
