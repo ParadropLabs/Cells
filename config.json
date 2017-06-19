@@ -16,7 +16,7 @@
         },
         "splitMass": 180
     },
-    "gameWidth": 2000,
+    "gameWidth": 4000,
     "gameHeight": 2000,
     "adminPass": "DEFAULT",
     "gameMass": 20000,
