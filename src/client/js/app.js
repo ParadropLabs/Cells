@@ -28,6 +28,11 @@ function startGame(type) {
 
     document.getElementById('startMenuWrapper').style.maxHeight = '0px';
     document.getElementById('gameAreaWrapper').style.opacity = 1;
+    if (type === 'player') {
+      var gameAreaWrapper = document.getElementById('gameAreaWrapper');
+      var connectInstructions = document.getElementById('connectInstructions');
+      gameAreaWrapper.removeChild(connectInstructions);
+    }
     if (!socket) {
         socket = io({query:"type=" + type});
         setupSocket(socket);

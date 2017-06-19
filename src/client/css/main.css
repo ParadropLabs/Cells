@@ -53,13 +53,28 @@ div {
     text-align: center;
 }
 
-#status .title {
-    font-size: 25px;
-}
-
 #status .me {
     color: #FF8888;
     font-size: 16.1px;
+}
+
+#connectInstructions {
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #FFF;
+    font-size: 16.1px;
+    top: 5px;
+    left: 5px;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+.title {
+    font-size: 25px;
+    font-weight: bold;
 }
 
 .chatbox {
