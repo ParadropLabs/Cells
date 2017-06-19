@@ -34,18 +34,21 @@ var leaderboardChanged = false;
 var V = SAT.Vector;
 var C = SAT.Circle;
 
-var pool = sql.createConnection({
-	host: s.host,
-	user: s.user,
-	database: s.database
-});
+if(s.host !== "DEFAULT") {
+    var pool = sql.createConnection({
+        host: s.host,
+        user: s.user,
+        password: s.password,
+        database: s.database
+    });
 
-//log sql errors
-pool.connect(function(err){
-	if (err){
-		console.log (err);
-	}
-});
+    //log sql errors
+    pool.connect(function(err){
+        if (err){
+            console.log (err);
+        }
+    });
+}
 
 var initMassLog = util.log(c.defaultPlayerMass, c.slowBase);
 
@@ -569,6 +572,7 @@ function tickPlayer(currentPlayer) {
 
         if(virusCollision > 0 && currentCell.mass > virus[virusCollision].mass) {
           sockets[currentPlayer.id].emit('virusSplit', z);
+          virus.splice(virusCollision, 1);
         }
 
         var masaGanada = 0;
