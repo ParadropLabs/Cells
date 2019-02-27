@@ -1,4 +1,12 @@
+name: cells
+description: A multiplayer action game.
+services:
+  main:
+    command: npm start
+    image: node
+    source: .
+    type: light
 version: 1
-type: light
-use: node
-command: npm start
+web:
+  port: 3000
+  service: main
